@@ -1,0 +1,13 @@
+bookofchanges/model/Reading.class
+bookofchanges/service/CastingServiceImpl.class
+bookofchanges/service/ReadingService.class
+bookofchanges/controller/HexagramController.class
+bookofchanges/model/Hexagram.class
+bookofchanges/model/HexagramReading.class
+bookofchanges/BookOfChangesApplication.class
+bookofchanges/service/ReadingServiceImpl.class
+bookofchanges/data/JdbcHexagramRepository.class
+bookofchanges/model/Line.class
+bookofchanges/service/CastingService.class
+bookofchanges/data/HexagramRepository.class
+bookofchanges/model/LineReading.class
