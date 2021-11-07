@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="book-of-changes" target="16" />
+      <module name="book-of-changes" target="1.8" />
       <module name="bookofchanges" target="16" />
     </bytecodeTargetLevel>
   </component>
