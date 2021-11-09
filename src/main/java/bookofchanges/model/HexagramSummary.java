@@ -1,15 +1,14 @@
 package bookofchanges.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Data
-public class HexagramReading {
+public class HexagramSummary {
     private int hexagramNumber;
     private String chineseName;
     private String englishName;
-    private String hexagramExplanation;
-    private ArrayList<LineReading> lines;
+    private ArrayList<Boolean> lineYangs;
 }

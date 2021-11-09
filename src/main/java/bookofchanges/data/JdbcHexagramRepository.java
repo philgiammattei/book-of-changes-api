@@ -1,6 +1,7 @@
 package bookofchanges.data;
 
 import bookofchanges.model.Hexagram;
+import bookofchanges.model.HexagramSummary;
 import bookofchanges.model.Line;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,31 @@ public class JdbcHexagramRepository implements HexagramRepository {
 
         return jdbc.queryForObject("select HEXAGRAMNUMBER, HEXAGRAMCHINESENAME, HEXAGRAMENGLISHNAME, HEXAGRAMEXPLANATION, LINEONEYANG, LINETWOYANG, LINETHREEYANG, LINEFOURYANG, LINEFIVEYANG, LINESIXYANG, LINEONEEXPLANATION, LINETWOEXPLANATION, LINETHREEEXPLANATION, LINEFOUREXPLANATION, LINEFIVEEXPLANATION, LINESIXEXPLANATION from HEXAGRAMS where LINEONEYANG=? and LINETWOYANG=? and LINETHREEYANG=? and LINEFOURYANG=? and LINEFIVEYANG=? and LINESIXYANG=?",
                 this::mapRowToHexagram, lineOneYang, lineTwoYang, lineThreeYang, lineFourYang, lineFiveYang, lineSixYang);
+    }
+
+    @Override
+    public Iterable<HexagramSummary> getAllHexagrams() {
+        return jdbc.query("select HEXAGRAMNUMBER, HEXAGRAMCHINESENAME, HEXAGRAMENGLISHNAME, LINEONEYANG, LINETWOYANG, LINETHREEYANG, LINEFOURYANG, LINEFIVEYANG, LINESIXYANG from HEXAGRAMS", this::mapRowToHexagramSummary);
+    }
+
+    private HexagramSummary mapRowToHexagramSummary(ResultSet rs, int rowNum) throws SQLException {
+        HexagramSummary hex = new HexagramSummary();
+        hex.setHexagramNumber(rs.getInt("HEXAGRAMNUMBER"));
+        hex.setEnglishName(rs.getString("HEXAGRAMENGLISHNAME"));
+        hex.setChineseName(rs.getString("HEXAGRAMCHINESENAME"));
+
+        ArrayList<Boolean> lineYangs = new ArrayList<Boolean>();
+
+        lineYangs.add(rs.getBoolean("LINEONEYANG"));
+        lineYangs.add(rs.getBoolean("LINETWOYANG"));
+        lineYangs.add(rs.getBoolean("LINETHREEYANG"));
+        lineYangs.add(rs.getBoolean("LINEFOURYANG"));
+        lineYangs.add(rs.getBoolean("LINEFIVEYANG"));
+        lineYangs.add(rs.getBoolean("LINESIXYANG"));
+
+        hex.setLineYangs(lineYangs);
+
+        return hex;
     }
 
     private Hexagram mapRowToHexagram(ResultSet rs, int rowNum) throws SQLException {

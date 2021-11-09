@@ -1,14 +1,18 @@
 package bookofchanges.controller;
 
+import bookofchanges.model.Hexagram;
+import bookofchanges.model.HexagramSummary;
 import bookofchanges.model.Line;
 import bookofchanges.model.Reading;
 import bookofchanges.service.CastingService;
+import bookofchanges.service.HexagramService;
 import bookofchanges.service.ReadingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +30,11 @@ public class HexagramController {
     @Autowired
     ReadingService readingService;
 
+    @Autowired
+    HexagramService hexagramService;
+
     @GetMapping("/new-reading")
-    public Reading generateReading(Model model) {
+    public Reading generateReading() {
 
         ArrayList<Line> castLines = castingService.castLines();
 
@@ -40,6 +47,13 @@ public class HexagramController {
 
         // log reading/return as json when converted to REST
         return reading;
+    }
+
+    @GetMapping("/all-hexagrams")
+    public Iterable<HexagramSummary> allHexagrams() {
+        Iterable<HexagramSummary> allHexagrams = hexagramService.getAllHexagrams();
+
+        return allHexagrams;
     }
 
     private void renderLines(ArrayList<Line> lines) {
