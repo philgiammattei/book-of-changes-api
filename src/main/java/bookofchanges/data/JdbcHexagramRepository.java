@@ -1,6 +1,7 @@
 package bookofchanges.data;
 
 import bookofchanges.model.Hexagram;
+import bookofchanges.model.HexagramReading;
 import bookofchanges.model.HexagramSummary;
 import bookofchanges.model.Line;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,11 @@ public class JdbcHexagramRepository implements HexagramRepository {
     public Iterable<HexagramSummary> getAllHexagrams() {
         return jdbc.query("select HEXAGRAMNUMBER, HEXAGRAMCHINESENAME, HEXAGRAMENGLISHNAME, LINEONEYANG, LINETWOYANG, LINETHREEYANG, LINEFOURYANG, LINEFIVEYANG, LINESIXYANG from HEXAGRAMS", this::mapRowToHexagramSummary);
     }
+    @Override
+    public Hexagram getHexagramByNumber(int hexagramNumber) {
+        return jdbc.queryForObject("select HEXAGRAMNUMBER, HEXAGRAMCHINESENAME, HEXAGRAMENGLISHNAME, HEXAGRAMEXPLANATION, LINEONEYANG, LINETWOYANG, LINETHREEYANG, LINEFOURYANG, LINEFIVEYANG, LINESIXYANG, LINEONEEXPLANATION, LINETWOEXPLANATION, LINETHREEEXPLANATION, LINEFOUREXPLANATION, LINEFIVEEXPLANATION, LINESIXEXPLANATION from HEXAGRAMS where HEXAGRAMNUMBER=?", this::mapRowToHexagram, hexagramNumber);
+    }
+
 
     private HexagramSummary mapRowToHexagramSummary(ResultSet rs, int rowNum) throws SQLException {
         HexagramSummary hex = new HexagramSummary();

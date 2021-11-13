@@ -1,9 +1,6 @@
 package bookofchanges.controller;
 
-import bookofchanges.model.Hexagram;
-import bookofchanges.model.HexagramSummary;
-import bookofchanges.model.Line;
-import bookofchanges.model.Reading;
+import bookofchanges.model.*;
 import bookofchanges.service.CastingService;
 import bookofchanges.service.HexagramService;
 import bookofchanges.service.ReadingService;
@@ -54,6 +51,11 @@ public class HexagramController {
         Iterable<HexagramSummary> allHexagrams = hexagramService.getAllHexagrams();
 
         return allHexagrams;
+    }
+
+    @GetMapping("/get-hexagram-by-number")
+    public HexagramReading getHexagramByNumber(@RequestParam int hexagramNumber) {
+        return hexagramService.getHexagramByNumber(hexagramNumber);
     }
 
     private void renderLines(ArrayList<Line> lines) {
