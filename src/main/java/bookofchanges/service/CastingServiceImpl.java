@@ -8,18 +8,18 @@ import java.util.ArrayList;
 @Service
 public class CastingServiceImpl implements CastingService {
     @Override
-    public ArrayList<Line> castLines() {
+    public ArrayList<Line> castLines(double[][] randomValues) {
         ArrayList<Line> lines = new ArrayList<Line>();
 
         for (int lineNumber = 0; lineNumber < 6; lineNumber++) {
             int numberOfStalks = 50;
             numberOfStalks -= 1;
 
-            int firstResult = resolveSeparation(numberOfStalks);
+            int firstResult = resolveSeparation(numberOfStalks, randomValues[lineNumber][0]);
             numberOfStalks -= firstResult;
-            int secondResult = resolveSeparation(numberOfStalks);
+            int secondResult = resolveSeparation(numberOfStalks, randomValues[lineNumber][1]);
             numberOfStalks -= secondResult;
-            int thirdResult = resolveSeparation(numberOfStalks);
+            int thirdResult = resolveSeparation(numberOfStalks, randomValues[lineNumber][2]);
 
             int finalResult = (firstResult == 9 ? 2 : 3)
                     + (secondResult == 8 ? 2 : 3)
@@ -48,8 +48,8 @@ public class CastingServiceImpl implements CastingService {
         return lines;
     }
 
-    private int resolveSeparation(int numberOfStalks) {
-        int left = (int) (Math.ceil(Math.random() * (numberOfStalks - 2)) + 1);
+    private int resolveSeparation(int numberOfStalks, double randomValue) {
+        int left = (int) (Math.ceil(randomValue * (numberOfStalks - 2)) + 1);
         int right = numberOfStalks - left;
 
         int stalksBetweenRingAndLittleFingersOfLeftHand = 1;

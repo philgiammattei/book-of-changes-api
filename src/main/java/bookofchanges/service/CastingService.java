@@ -5,5 +5,5 @@ import bookofchanges.model.Line;
 import java.util.ArrayList;
 
 public interface CastingService {
-    public ArrayList<Line> castLines();
+    public ArrayList<Line> castLines(double[][] randomValues);
 }
